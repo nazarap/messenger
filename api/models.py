@@ -40,6 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     contacts = models.ManyToManyField(Contact, through='ContactUser')  # Contacts list for vk
     img = models.CharField(max_length=255, null=True)  # User image url
+    first_name = models.CharField(max_length=255, null=True)  # User image url
+    last_name = models.CharField(max_length=255, null=True)  # User image url
     vk_id = models.CharField(max_length=100, null=True)  # User vk id
     vk_token = models.CharField(max_length=100, null=True, unique=True)  # User vk token
 

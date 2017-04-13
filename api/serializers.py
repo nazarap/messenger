@@ -11,4 +11,4 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'img', 'vk_id', 'vk_token', 'contacts', 'token', 'login', 'password')
+        fields = ('id', 'img', 'vk_id', 'vk_token', 'contacts', 'first_name', "last_name")
