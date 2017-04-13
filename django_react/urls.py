@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 from rest_framework.authtoken import views as rest_framework_views
 
 urlpatterns = [
-    url(r'^api/user/login/$', local_views.UserViewSet.as_view({'post': 'get_user'})),
+    url(r'^api/user/login/$', local_views.UserViewSet.as_view({'post': 'user_login'})),
+    url(r'^api/user/create/$', local_views.UserViewSet.as_view({'post': 'create_user'})),
 
     # Session Login
     url(r'^api/user/auth/$', rest_framework_views.obtain_auth_token, name='get_auth_token'),

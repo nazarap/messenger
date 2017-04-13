@@ -16,10 +16,10 @@ from django.db import models
 class Contact(models.Model):
     first_name = models.CharField(max_length=255)  # Contact first name
     last_name = models.CharField(max_length=255)  # Contact last name
-    img = models.CharField(max_length=255)  # Contact image url
+    img = models.CharField(max_length=255, null=True)  # Contact image url
     vk_id = models.CharField(max_length=100)  # Contact vk id
     active = models.BooleanField()  # Is contact active
-    user_id = models.IntegerField()  # Contact to User
+    user_id = models.IntegerField(null=True)  # Contact to User
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators.RegexValidator(re.compile(
             '^[\w.@+-]+$'), _('Enter a valid username.'), 'invalid')
     ])
-    email = models.EmailField(_('email address'), max_length=254, unique=True)
+    email = models.EmailField(_('email address'), max_length=254, null=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin '
                                                'site.'))
@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, null=True)  # User image url
     last_name = models.CharField(max_length=255, null=True)  # User image url
     vk_id = models.CharField(max_length=100, null=True)  # User vk id
-    vk_token = models.CharField(max_length=100, null=True, unique=True)  # User vk token
+    vk_token = models.CharField(max_length=100, null=True)  # User vk token
 
 
     objects = UserManager()

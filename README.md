@@ -15,8 +15,7 @@ $ sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-con
 Tutorial install postgres and create user and role. Connect Django to Postgres
 https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04
 
-$ python manage.py syncdb
-
+$ python manage.py runserver
 
 Django migrate
 $ python manage.py makemigrations api
