@@ -52,6 +52,7 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             user_in_contact = Contact.objects.get(vk_id=vk_id)
             user_in_contact.user_id = user.id
+            user_in_contact.active = True
             user_in_contact.save()
         except ObjectDoesNotExist:
             user_in_contact = None
@@ -95,12 +96,13 @@ class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
 
+    # Get Contacts list bu User id
     def get_contacts_by_user(self, request, user_id):
-        u = User.objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
 
         serializer_context = {
             'request': Request(request),
         }
 
-        contacts = ContactSerializer(u.contacts, many=True, context=serializer_context).data
+        contacts = ContactSerializer(user.contacts, many=True, context=serializer_context).data
         return Response({"contacts": contacts})

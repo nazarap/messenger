@@ -12,4 +12,7 @@ urlpatterns = [
     # Session Login
     url(r'^api/user/auth/$', rest_framework_views.obtain_auth_token, name='get_auth_token'),
 
+    # Contacts request
+    url(r'^api/contacts/(?P<user_id>[0-9]+)$', local_views.ContactViewSet.as_view({'get': 'get_contacts_by_user'})),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
