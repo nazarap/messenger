@@ -9,9 +9,51 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.renderers import JSONRenderer
+
+
+def get_token(request):
+    try:
+        return request.META['HTTP_AUTHORIZATION'].replace("Token ", "")
+    except ObjectDoesNotExist:
+        return "Bad token auth"
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    renderer_classes = (JSONRenderer,)
+
+    # Get User data by Token
+    def user_by_token(self, request):
+
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+                serializer = UserSerializer([user], many=True, context=serializer_context)
+
+                # Return User data
+                return Response({'user': serializer.data[0]})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -88,6 +130,8 @@ class UserViewSet(viewsets.ModelViewSet):
             }
             serializer = UserSerializer([user], many=True, context=serializer_context)
             # Return User data and User token
+            print(serializer)
+            print(token.key)
             return Response({'user': serializer.data[0], 'token': token.key})
         return Response({"non_field_errors": "Unable to log in with provided credentials."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,14 +139,27 @@ class UserViewSet(viewsets.ModelViewSet):
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    renderer_classes = (JSONRenderer,)
 
     # Get Contacts list bu User id
-    def get_contacts_by_user(self, request, user_id):
-        user = User.objects.get(id=user_id)
+    def get_contacts_by_user(self, request):
 
-        serializer_context = {
-            'request': Request(request),
-        }
+        token = get_token(request)
 
-        contacts = ContactSerializer(user.contacts, many=True, context=serializer_context).data
-        return Response({"contacts": contacts})
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+
+                contacts = ContactSerializer(user.contacts, many=True, context=serializer_context).data
+                return Response({"contacts": contacts})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
