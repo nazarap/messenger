@@ -130,8 +130,6 @@ class LoginViewSet(viewsets.ModelViewSet):
             }
             serializer = UserSerializer([user], many=True, context=serializer_context)
             # Return User data and User token
-            print(serializer)
-            print(token.key)
             return Response({'user': serializer.data[0], 'token': token.key})
         return Response({"non_field_errors": "Unable to log in with provided credentials."}, status=status.HTTP_400_BAD_REQUEST)
 
