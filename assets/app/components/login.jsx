@@ -2,7 +2,7 @@ import React from 'react';
 import SignIn from './signin.jsx';
 import SignUp from './signup.jsx';
 
-export default class LoginContent extends React.Component {
+export default class Login extends React.Component {
     render() {
         return (
             <div>
