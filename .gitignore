@@ -3,3 +3,5 @@
 /api/*.pyc
 /django_react/*.pyc
 /db.sqlite3
+assets/app/build.js
+node_modules/

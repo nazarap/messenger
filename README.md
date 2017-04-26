@@ -1,4 +1,6 @@
 
+BACK-END PATH
+
 Install Django
 $ sudo apt-get install python-django
 
@@ -20,3 +22,29 @@ $ python manage.py runserver
 Django migrate
 $ python manage.py makemigrations api
 $ python manage.py migrate
+
+
+
+FRONT-END PATH
+
+ - ES6
+ - webpack
+ - CoreJS
+ - ReactJS
+ - babel
+
+HTML TEMPLATES
+ - CSS
+ - sass
+ - HTML
+
+BACK-END
+ - Python
+ - Django
+ - Sockets
+
+DATABASE
+ - MongoDB
+ 
+CONTAINER 
+ - Docker
