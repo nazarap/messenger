@@ -1,21 +1,25 @@
-import React from 'react';
-import Contact from '../domain/Contact';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { getContacts, getContactsSuccess } from '../actions/contacts';
 
-export default class ContactsList extends React.Component {
+class ContactsList extends React.Component {
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    componentDidMount() {
+        this.props.getContactsList()
+    }
+
     render() {
-        let contacts = [
-            new Contact(1, "Nazar", "Oryschuk", "https://pp.userapi.com/c631520/v631520122/404a7/19cw3JvnFq8.jpg"),
-            new Contact(2, "Nazar", "Oryschuk", "https://pp.userapi.com/c631520/v631520122/404a7/19cw3JvnFq8.jpg"),
-            new Contact(3, "Nazar", "Oryschuk", "https://pp.userapi.com/c631520/v631520122/404a7/19cw3JvnFq8.jpg"),
-            new Contact(4, "Nazar", "Oryschuk", "https://pp.userapi.com/c631520/v631520122/404a7/19cw3JvnFq8.jpg")
-        ];
+        let contacts = this.props.contactsStore.contacts;
 
         let list = contacts.map(function (contact) {
             return (
                 <li key={contact.id}>
-                    <img src={contact.imageURL}/>
+                    <img src={contact.img}/>
                     <div className="message-info">
-                        <h4>{contact.firstName}</h4>
+                        <h4>{contact.first_name}</h4>
                         <p>Some message text ...</p>
                     </div>
                     <div className="message-clock">
@@ -32,3 +36,20 @@ export default class ContactsList extends React.Component {
         )
     }
 }
+
+export default connect(
+  state => ({
+    contactsStore: state.contacts
+  }),
+  dispatch => ({
+    getContactsList: () => {
+        dispatch(getContacts())
+            .then((response) => {
+                if(!response.error) {
+                    dispatch(getContactsSuccess(response.payload.data));
+                } else {
+                }
+        });
+    }
+  })
+)(ContactsList);

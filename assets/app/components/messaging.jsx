@@ -5,6 +5,6 @@ import MessageContent from './messageContent.jsx';
 
 export default class Messaging extends React.Component {
     render() {
-        return ( <div className="content"><LeftBar/><MessageContent user={this.props.route.user}/></div> )
+        return ( <div className="content"><LeftBar/><MessageContent /></div> )
     }
 }
