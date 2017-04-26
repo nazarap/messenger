@@ -11,7 +11,7 @@ import { Router, Route, IndexRoute, browserHistory, Redirect } from 'react-route
 export default (
     <Router history={browserHistory}>
         <Route component={ActionBar}>
-            <Route path='/messaging' user={user} component={Messaging} />
+            <Route path='/messaging' component={Messaging} />
         </Route>
         <Route path='/login' component={Login} />
         <Route path='/create' component={CreateAccount} />
