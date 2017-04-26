@@ -1,14 +1,19 @@
 import React from 'react';
 import MessageList from './messageList.jsx';
+import { connect } from 'react-redux';
+import { getUser, getUserSuccess } from '../actions/users';
 
-export default class MessageContent extends React.Component {
+class MessageContent extends React.Component {
+
+    componentDidMount() {}
 
     render() {
+        let user = this.props.userStore.user;
         return (
             <div className="message-block">
                 <div className="header">
-                    <img src="https://pp.userapi.com/c631520/v631520122/404a7/19cw3JvnFq8.jpg"/>
-                    <h4>Nazar Oryschuk</h4>
+                    <img src={user.img}/>
+                    <h4>{user.first_name} {user.last_name}</h4>
                     <i className="fa fa-cog" aria-hidden="true"></i>
                 </div>
                 <MessageList/>
@@ -22,3 +27,20 @@ export default class MessageContent extends React.Component {
         )
     }
 }
+
+export default connect(
+    state => ({
+        userStore: state.user
+    }),
+    dispatch => ({
+        getUser: () => {
+            dispatch(getUser())
+                .then((response) => {
+                    if(!response.error) {
+                        dispatch(getUserSuccess(response.payload.data));
+                    } else {
+                    }
+                });
+    }
+})
+)(MessageContent);

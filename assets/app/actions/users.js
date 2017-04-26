@@ -4,6 +4,7 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const LOGIN = 'LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
 
 //const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
 
@@ -51,5 +52,12 @@ export function loginSuccess(currentUser) {
   return {
     type: LOGIN_SUCCESS,
     payload: currentUser
+  };
+}
+
+export function loginError(errorMessage) {
+  return {
+    type: LOGIN_ERROR,
+    payload: errorMessage
   };
 }

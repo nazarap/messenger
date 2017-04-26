@@ -13,13 +13,18 @@ header {
     height: 45px;
 }
 
-header > h1 {
+header > a > h1 {
+    cursor: pointer;
     display: inline-block;
     margin-left: 20%;
     margin-top: 10px;
     color: white;
     font-size: 20px;
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+header > a {
+    outline: 0;
 }
 
 header div.right-menu {
@@ -31,7 +36,7 @@ header div.right-menu {
     padding-right: 10px;
 }
 header div.right-menu:hover {
-    background-color: #486991;
+    background-color: #4a6b78;
     cursor: pointer;
 }
 
@@ -123,6 +128,8 @@ header div.right-menu > i {
     margin-top: 3px;
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
     color: #2d2d2d;
+    font-size: 14px;
+    word-spacing: -2px;
 }
 
 .content .message-block .message-list {
@@ -322,6 +329,7 @@ header.login-header {
     font-size: 15px;
     font-weight: 600;
     color: black;
+    margin-bottom: 15px;
 }
 
 .login-block button.next-btn:hover {

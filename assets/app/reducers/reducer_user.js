@@ -1,5 +1,5 @@
 import {
-  GET_USER, GET_USER_SUCCESS, LOGIN, LOGIN_SUCCESS
+  GET_USER, GET_USER_SUCCESS, LOGIN, LOGIN_SUCCESS, LOGIN_ERROR
 } from '../actions/users';
 
 const INITIAL_STATE = {user: {}, loading: false};
@@ -20,6 +20,10 @@ export default function(state = INITIAL_STATE, action) {
     case LOGIN_SUCCESS:
         sessionStorage.setItem('authToken', action.payload.token);
         return { ...state, user: action.payload.user, loading: false};
+
+
+    case LOGIN_ERROR:
+        return { ...state, error: action.payload, loading: false};
 
     default:
         return state;

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { login, loginSuccess } from '../actions/users';
+import { login, loginSuccess, loginError } from '../actions/users';
 import { browserHistory } from 'react-router';
 
 class SignIn extends React.Component {
@@ -13,6 +13,7 @@ class SignIn extends React.Component {
     }
 
     render() {
+        let error = this.props.userStore.error || "";
         return (
             <div className="login-block">
                 <h4>Sign in</h4>
@@ -34,9 +35,10 @@ export default connect(
         dispatch(login(auth))
             .then((response) => {
                 if(!response.error) {
-                    browserHistory.push('/messaging');
                     dispatch(loginSuccess(response.payload.data));
+                    browserHistory.push('/messaging');
                 } else {
+                    dispatch(loginError(response.payload.response.data));
                 }
             });
     }

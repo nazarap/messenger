@@ -2,11 +2,22 @@ import React from 'react';
 import { Link } from 'react-router'
 import { connect } from 'react-redux';
 import { getUser, getUserSuccess } from '../actions/users';
+import { browserHistory } from 'react-router';
 
 class ActionBar extends React.Component {
 
     componentDidMount() {
-        this.props.getUser()
+        if(sessionStorage.getItem('authToken') && !this.props.userStore.user.id) {
+            this.props.getUser()
+        }
+        if(!sessionStorage.getItem('authToken') && !this.props.userStore.user.id) {
+            browserHistory.push('/login');
+        }
+    }
+
+    logout() {
+        sessionStorage.removeItem('authToken');
+        browserHistory.push('/login');
     }
 
     render() {
@@ -14,14 +25,14 @@ class ActionBar extends React.Component {
         return (
             <div>
                 <header>
-                    <h1>Celestial</h1>
-                    <Link to={`/login`}>
-                        <div className="right-menu">
-                            <h4>{user.first_name}</h4>
-                            <img src={user.img}/>
-                            <i className="fa fa-caret-down" aria-hidden="true"></i>
-                        </div>
+                    <Link to={`/messaging`}>
+                        <h1>Messenger</h1>
                     </Link>
+                    <div className="right-menu" onClick={this.logout.bind(this)}>
+                        <h4>{user.first_name}</h4>
+                        <img src={user.img}/>
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
+                    </div>
                 </header>
                 {this.props.children}
             </div>

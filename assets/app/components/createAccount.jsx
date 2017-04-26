@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router';
 
 export default class CreateAccount extends React.Component {
+
+    componentDidMount() {
+        if(sessionStorage.getItem('authToken')) {
+            browserHistory.push('/messaging');
+        }
+    }
+
     render() {
         return (
             <div>
