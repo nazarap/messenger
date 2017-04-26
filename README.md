@@ -32,15 +32,15 @@ directory. You shall see the following files and directories:
 PROJECT STRUCTURE
 ------------------------
 
-      api/                                       directory with models and views for project api
-      assets/                                  front-end files
-      django_react/                      django project settings and root url file
+      api/                            directory with models and views for project api
+      assets/                         front-end files
+      django_react/                   django project settings and root url file
       node_modules/                   modules for front-end
-      templates/                           directory for templates (index.html)
-      .gitignore                              gitignore file
-      manage.py                           root file for django project
-      webpack.config.js                main config for webpack
-      README                                this file
+      templates/                      directory for templates (index.html)
+      .gitignore                      gitignore file
+      manage.py                       root file for django project
+      webpack.config.js               main config for webpack
+      README                          this file
 
 
 INSTALLATION

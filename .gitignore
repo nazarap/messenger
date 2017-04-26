@@ -1,5 +1,4 @@
 .idea/
-/api/migrations/
 /api/*.pyc
 /django_react/*.pyc
 /db.sqlite3
