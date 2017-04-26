@@ -13,5 +13,10 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        index: 'templates/index.html',
+        port: 3000,
+        historyApiFallback: true
+    },
     watch: true
 };

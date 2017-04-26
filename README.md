@@ -48,3 +48,38 @@ DATABASE
  
 CONTAINER 
  - Docker
+ 
+Install and Run application
+
+npm i
+npm i -g webpack
+webpack
+webpack-dev-server
+
+React components structure
+
+route ->
+
+    /login
+    Login ->
+        SignIn
+        SignUp
+        
+    /create
+    CreateAccount;
+        
+    /    
+    ActionBar (    
+    
+    /messaging
+    Messaging ->
+    
+        LeftBar ->
+        
+            ContactsList;
+            
+        MessageContent ->
+        
+            MessageList;
+        
+    }
