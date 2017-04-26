@@ -11,7 +11,7 @@ export function getContacts() {
     method: 'get',
     url: 'http://localhost:8000/api/contacts/',
     headers: {
-      'Authorization': `Token 2030bf1847edba33f7f7d4efe6642fd345a7f0f8`
+      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
     }
   });
 
