@@ -3,18 +3,369 @@ html, body, #app, #app > div {
 }
 
 body {
+    background-color: #edeef0;
     margin: 0;
 }
 
-.left-bar {
-    width: 20%;
+header {
+    width: 100%;
+    background-color: #537380;
+    height: 45px;
+}
+
+header > h1 {
+    display: inline-block;
+    margin-left: 20%;
+    margin-top: 10px;
+    color: white;
+    font-size: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+header div.right-menu {
+    display: inline-block;
+    float: right;
+    margin-right: 20%;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+header div.right-menu:hover {
+    background-color: #486991;
+    cursor: pointer;
+}
+
+header div.right-menu > h4 {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 8px;
+    margin-bottom: 0;
+    margin-right: 11px;
+    font-size: 12px;
+    color: white;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+header div.right-menu > img {
+    vertical-align: middle;
+    height: 30px;
+    width: 30px;
+    border-radius: 40px;
+    margin-top: 7px;
+}
+
+header div.right-menu > i {
+    color: white;
+    font-size: 15px !important;
+    vertical-align: middle;
+    margin: 5px;
+    padding-top: 7px;
+}
+
+.content {
+    width: 56%;
+    margin-left: 22%;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: white;
+    margin-top: 1px;
+    height: calc(100% - 57px);
+}
+
+.content .left-bar {
     display: inline-block;
     height: 100%;
+    width: 30%;
+    border-right: 3px solid #ededed;
+}
+
+.content .left-bar .search-block {
+    height: 45px;
+    padding-top: 15px;
+    padding-left: 10px;
+}
+
+.content .left-bar .search-block input {
+    border: none;
+    padding-left: 15px;
+    border-bottom: 1px solid #d7d8db;
+    margin-top: 4px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+    width: 90%;
+}
+
+.content .message-block {
+    width: 69%;
+    height: 100%;
+    display: inline-block;
     vertical-align: top;
 }
 
-.message-list {
-    width: calc(80% - 5px);
+.content .message-block .header {
+    border-bottom: 2px solid #ededed;
+}
+
+.content .message-block .header img {
+    width: 35px;
+    height: 35px;
+    border-radius: 40px;
+    margin: 15px;
+    vertical-align: middle;
+    margin-left: 30px;
+}
+
+.content .message-block .header h4 {
     display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    margin-top: 3px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    color: #2d2d2d;
+}
+
+.content .message-block .message-list {
+    overflow: auto;
+    height: calc(100% - 135px);
+    padding-right: 65px;
+    padding-left: 65px;
+}
+
+.content .left-bar .contact-list {
+    height: calc(100% - 76px);
+}
+
+.content .left-bar .contact-list > ul {
+    overflow: auto;
     height: 100%;
+    margin-top: 5px;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+}
+
+.content .left-bar .contact-list > ul > li {
+    padding-right: 10px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.content .left-bar .contact-list > ul > li:hover {
+    background-color: #f2f6fa;
+}
+
+.content .left-bar .contact-list > ul > li > img, .message-block > .message-list > .message-item > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 65px;
+    margin-right: 10px;
+}
+
+.message-block > .message-list > .message-item > .message-info > h4 {
+    color: #537380;
+}
+
+.message-block > .message-list > .message-item > img {
+    width: 40px;
+    height: 40px;
+}
+
+.message-block > .header > i {
+    cursor: pointer;
+    float: right;
+    margin-top: 23px;
+    margin-right: 30px;
+    font-size: 22px;
+    color: #537380;
+}
+
+.content .left-bar .contact-list > ul > li > .message-info, .message-block > .message-list > .message-item > .message-info {
+    display: inline-block;
+    width: calc(100% - 140px);
+    vertical-align: top;
+}
+
+.content .left-bar .contact-list > ul > li > .message-info > h4, .message-block > .message-list > .message-item > .message-info > h4 {
+    color: #2d2d2d;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 5px;
+    font-size: 13px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    margin-bottom: 0;
+}
+
+.message-block > .message-list > .message-item > .message-info > h4 {
+    color: #537380;
+}
+
+.content .left-bar .contact-list > ul > li > .message-info > p, .message-block > .message-list > .message-item > .message-info > p {
+    color: #787878;
+    font-size: 11px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+.message-block > .message-list > .message-item > .message-info > p {
+    color: #151515;
+    font-size: 13px;
+}
+
+.content .left-bar .contact-list > ul > li > .message-clock, .message-block > .message-list > .message-item > .message-clock {
+    vertical-align: top;
+    width: 70px;
+    display: inline-block;
+}
+
+.content .left-bar .contact-list > ul > li > .message-clock > strong, .message-block > .message-list > .message-item > .message-clock > strong {
+    font-weight: 400;
+    font-size: 11px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    color: #b3b3b3;
+    float: right;
+    margin-right: 5px;
+}
+
+.content .left-bar .contact-list > ul > li > .message-clock > div   {
+    height: 20px;
+    width: 20px;
+    border-radius: 30px;
+    background-color: red;
+    display: none;
+}
+
+.content .left-bar .contact-list > ul > li.active {
+    background-color: #537380;
+    border-left: 3px solid #3c4c5f;
+    padding-left: 12px;
+}
+
+.content .left-bar .contact-list > ul > li.active > .message-info > h4,
+.content .left-bar .contact-list > ul > li.active > .message-info > p,
+.content .left-bar .contact-list > ul > li.active > .message-clock > strong {
+    color: white !important;
+}
+
+.message-block > .message-send {
+    height: 45px;
+    padding: 10px 65px 10px 65px;
+}
+
+.message-block > .message-send > input {
+    height: 35px;
+    width: calc(100% - 75px);
+    border: none;
+    border-bottom: 3px solid #537380;
+}
+
+.message-block > .message-send > button {
+    width: 37px;
+    height: 37px;
+    border-radius: 50px;
+    border-style: none;
+    margin-left: 13px;
+    background-color: #537380;
+    color: white;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.message-list-top {
+    width: 100%;
+    height: 60px;
+}
+
+/*Login page style*/
+
+header.login-header {
+    background-color: #537380;
+    height: 250px;
+}
+
+.login-block {
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    height: 400px;
+    padding: 20px 70px;
+    width: 210px;
+    margin-top: -75px;
+    background-color: white;
+    border-radius: 2px;
+    margin-left: calc((100% - 850px) / 2);
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.login-block h4 {
+
+}
+.login-block p {
+    line-height: 160%;
+    font-size: 12px;
+    color: #909090;
+}
+.login-block input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #537380;
+    height: 32px;
+    margin-top: 30px;
+}
+.login-block button.next-btn {
+    float: right;
+    margin-top: 105px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+}
+
+.login-block button.next-btn:hover {
+    color: #537380;
+}
+
+.login-block button.next-btn i {
+    font-size: 19px;
+    font-weight: 600;
+    vertical-align: top;
+    margin-left: 5px;
+}
+
+.reg-block {
+    margin-left: 150px;
+}
+
+.reg-block button {
+    border: none;
+    border-bottom: 2px solid #537380;
+    background-color: white;
+    cursor: pointer;
+    margin: 60px;
+    color: #537380;
+}
+
+.reg-block button i {
+    font-size: 60px ;
+}
+
+
+/*Create account style*/
+
+.account-create-block {
+    margin-left: calc(50% - 210px);
+    width: 280px;
+    padding-bottom: 40px;
+    height: auto;
+}
+
+.account-create-block img {
+    margin: 30px calc(50% - 30px) 0;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
 }
