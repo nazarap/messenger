@@ -1,6 +1,6 @@
 module.exports = {
-    entry: './app/app.js',
-    output: { path: "app", filename: 'build.js' },
+    entry: './assets/app/router.js',
+    output: { path: "assets/app", filename: 'build.js' },
     module: {
         loaders: [
             {
