@@ -263,14 +263,19 @@ header div.right-menu > i {
     padding: 10px 65px 10px 65px;
 }
 
-.message-block > .message-send > input {
-    height: 35px;
+.message-block > .message-send > input, .message-block > .message-send > textarea {
+    font-size: 13px;
+    height: 30px;
+    resize: none;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    word-wrap: break-word;
     width: calc(100% - 75px);
     border: none;
     border-bottom: 3px solid #537380;
 }
 
 .message-block > .message-send > button {
+    vertical-align: 10px;
     width: 37px;
     height: 37px;
     border-radius: 50px;

@@ -2,10 +2,16 @@ import React from 'react';
 import MessageList from './messageList.jsx';
 import { connect } from 'react-redux';
 import { getUser, getUserSuccess } from '../actions/users';
+import { sendMessage, getMessagesSuccess } from '../actions/messages';
 
 class MessageContent extends React.Component {
 
     componentDidMount() {}
+
+    send() {
+        this.props.sendMessage(this.props.friendsStore.openDialogWithUser.id, this.messageText.value);
+        this.messageText.value = "";
+    }
 
     render() {
         let user = this.props.friendsStore.openDialogWithUser;
@@ -20,8 +26,8 @@ class MessageContent extends React.Component {
                     </div>
                     <MessageList/>
                     <div className="message-send">
-                        <input/>
-                        <button>
+                        <textarea rows="4" cols="50" placeholder="Write a message here..." ref={(messageText) => { this.messageText = messageText }} ></textarea>
+                        <button onClick={this.send.bind(this)}>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -37,7 +43,8 @@ class MessageContent extends React.Component {
 export default connect(
     state => ({
         userStore: state.user,
-        friendsStore: state.friends
+        friendsStore: state.friends,
+        messagesStore: state.messages
     }),
     dispatch => ({
         getUser: () => {
@@ -48,6 +55,15 @@ export default connect(
                     } else {
                     }
                 });
+        },
+        sendMessage: (user_id, text) => {
+            dispatch(sendMessage(user_id, text))
+                .then((response) => {
+                    if(!response.error) {
+                        dispatch(getMessagesSuccess(response.payload.data));
+                    } else {}
+                });
+        },
     }
-})
+)
 )(MessageContent);

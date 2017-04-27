@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions, status
 from rest_framework.renderers import JSONRenderer
 from django.db.models import Q
+from datetime import datetime
 
 def get_token(request):
     try:
@@ -231,6 +232,40 @@ class MessageViewSet(viewsets.ModelViewSet):
                     serializer = MessageSerializer(messages, many=True, context=serializer_context)
 
                     return Response({"messages": serializer.data})
+
+                except ObjectDoesNotExist:
+                    return Response({})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Send message to user
+    def send_message(self, request):
+
+        # Get params from request
+        request_data = json.loads(request.body)
+        user_id = request_data.get('user_id')
+        text = request_data.get('text')
+
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+                try:
+
+                    messages = Message.objects.create(user_from_id=user.id, user_to_id=user_id, text=text,
+                                                      date=datetime.now())
+
+                    # serializer = MessageSerializer(messages, many=True, context=serializer_context)
+
+                    return self.get_messages_by_user(request, user_id)
 
                 except ObjectDoesNotExist:
                     return Response({})
