@@ -1,8 +1,8 @@
 import {
-    GET_FRIENDS, GET_FRIENDS_SUCCESS
+    GET_FRIENDS, GET_FRIENDS_SUCCESS, OPEN_DIALOG
 } from '../actions/friends';
 
-const INITIAL_STATE = {friends: [], loading: false};
+const INITIAL_STATE = {friends: [], loading: false, openDialogWithUser: {}};
 
 export default function(state = INITIAL_STATE, action) {
   let error;
@@ -13,6 +13,9 @@ export default function(state = INITIAL_STATE, action) {
 
     case GET_FRIENDS_SUCCESS:
         return { ...state, ...action.payload, loading: false};
+
+    case OPEN_DIALOG:
+        return { ...state, openDialogWithUser: action.payload};
 
     default:
         return state;

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getFriends, getFriendsSuccess } from '../actions/friends';
+import { getFriends, getFriendsSuccess, openDialog } from '../actions/friends';
 
 class FriendsList extends React.Component {
     static contextTypes = {
@@ -11,8 +11,8 @@ class FriendsList extends React.Component {
         this.props.getFriendsList();
     }
 
-    openDialog(item) {
-        console.log(this.isActive);
+    openDialog(user) {
+        this.props.openDialog(user);
     }
 
     render() {
@@ -20,7 +20,9 @@ class FriendsList extends React.Component {
 
         let list = friends.map( friend => {
             return (
-                <li key={friend.id} onClick={this.openDialog.bind(this, friend)}>
+                <li className={ this.props.friendsStore.openDialogWithUser.id == friend.id ? 'active' : ''}
+                    key={friend.id}
+                    onClick={this.openDialog.bind(this, friend)}>
                     <img src={friend.img}/>
                     <div className="message-info">
                         <h4>{friend.first_name}</h4>
@@ -54,6 +56,7 @@ export default connect(
                 } else {
                 }
         });
-    }
+    },
+    openDialog: user => dispatch(openDialog(user))
   })
 )(FriendsList);

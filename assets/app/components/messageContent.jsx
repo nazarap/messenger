@@ -8,29 +8,36 @@ class MessageContent extends React.Component {
     componentDidMount() {}
 
     render() {
-        let user = this.props.userStore.user;
+        let user = this.props.friendsStore.openDialogWithUser;
+
         return (
-            <div className="message-block">
-                <div className="header">
-                    <img src={user.img}/>
-                    <h4>{user.first_name} {user.last_name}</h4>
-                    <i className="fa fa-cog" aria-hidden="true"></i>
+            user.id ?
+                <div className="message-block">
+                    <div className="header">
+                        <img src={user.img}/>
+                        <h4>{user.first_name} {user.last_name}</h4>
+                        <i className="fa fa-cog" aria-hidden="true"></i>
+                    </div>
+                    <MessageList/>
+                    <div className="message-send">
+                        <input/>
+                        <button>
+                            <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
-                <MessageList/>
-                <div className="message-send">
-                    <input/>
-                    <button>
-                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                    </button>
+            :
+                <div className="message-block">
+                    <h1>Please select dialog for display in this window</h1>
                 </div>
-            </div>
         )
     }
 }
 
 export default connect(
     state => ({
-        userStore: state.user
+        userStore: state.user,
+        friendsStore: state.friends
     }),
     dispatch => ({
         getUser: () => {
