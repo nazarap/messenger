@@ -140,7 +140,7 @@ header div.right-menu > i {
 }
 
 .content .left-bar .contact-list {
-    height: calc(100% - 76px);
+    height: calc(100% - 110px);
 }
 
 .content .left-bar .contact-list > ul {
@@ -376,4 +376,31 @@ header.login-header {
     width: 60px;
     height: 60px;
     border-radius: 100px;
+}
+
+.left-btn-list {
+    padding: 5px 0;
+}
+
+.left-btn-list button {
+    margin-left: 10px;
+    height: 25px;
+    border-radius: 15px;
+    width: 40%;
+    font-size: 13px;
+    cursor: pointer;
+    border: 2px solid #537380;
+    background: white;
+    color: #537380;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+.left-btn-list button:first-child {
+    margin-left: calc(10% - 5px);
+}
+
+.left-btn-list button.active {
+    border: none;
+    background: #537380;
+    color: white;
 }

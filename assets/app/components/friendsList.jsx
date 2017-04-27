@@ -1,31 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getContacts, getContactsSuccess } from '../actions/contacts';
+import { getFriends, getFriendsSuccess } from '../actions/friends';
 
-class ContactsList extends React.Component {
+class FriendsList extends React.Component {
     static contextTypes = {
         router: PropTypes.object
     };
 
     componentDidMount() {
-        this.props.getContactsList()
+        this.props.getFriendsList();
     }
 
     openDialog(item) {
-        console.log(this.isActive)
-        this.props.isActive = item;
-        this.props.contactsStore.contacts = this.props.contactsStore.contacts;
+        console.log(this.isActive);
     }
 
     render() {
-        let contacts = this.props.contactsStore.contacts;
+        let friends = this.props.friendsStore.friends;
 
-        let list = contacts.map( contact => {
+        let list = friends.map( friend => {
             return (
-                <li key={contact.id} onClick={this.openDialog.bind(this, contact)}>
-                    <img src={contact.img}/>
+                <li key={friend.id} onClick={this.openDialog.bind(this, friend)}>
+                    <img src={friend.img}/>
                     <div className="message-info">
-                        <h4>{contact.first_name}</h4>
+                        <h4>{friend.first_name}</h4>
                         <p>Some message text ...</p>
                     </div>
                     <div className="message-clock">
@@ -45,17 +43,17 @@ class ContactsList extends React.Component {
 
 export default connect(
   state => ({
-    contactsStore: state.contacts
+    friendsStore: state.friends
   }),
   dispatch => ({
-    getContactsList: () => {
-        dispatch(getContacts())
+    getFriendsList: () => {
+        dispatch(getFriends())
             .then((response) => {
                 if(!response.error) {
-                    dispatch(getContactsSuccess(response.payload.data));
+                    dispatch(getFriendsSuccess(response.payload.data));
                 } else {
                 }
         });
     }
   })
-)(ContactsList);
+)(FriendsList);
