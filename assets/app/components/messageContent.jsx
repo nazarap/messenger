@@ -9,6 +9,7 @@ class MessageContent extends React.Component {
     componentDidMount() {}
 
     send() {
+        if(!this.messageText.value || this.messageText.value == "") return;
         this.props.sendMessage(this.props.friendsStore.openDialogWithUser.id, this.messageText.value);
         this.messageText.value = "";
     }

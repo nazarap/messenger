@@ -12,7 +12,7 @@ class MessageList extends React.Component {
         let date = new Date(d);
         if(new Date(date).setHours(0,0,0,0) == new Date().setHours(0,0,0,0)) {
             return (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) + ":"
-                + date.getMinutes() + ":" + date.getSeconds() + " " + (date.getHours() > 12 ? "AM" : "PM")
+                + date.getMinutes() + ":" + date.getSeconds() + " " + (date.getHours() > 12 ? "PM" : "AM")
         } else {
             return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
         }

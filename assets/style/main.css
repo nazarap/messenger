@@ -135,8 +135,8 @@ header div.right-menu > i {
 .content .message-block .message-list {
     overflow: auto;
     height: calc(100% - 135px);
-    padding-right: 65px;
-    padding-left: 65px;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .content .left-bar .contact-list {
