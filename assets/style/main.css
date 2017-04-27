@@ -207,6 +207,7 @@ header div.right-menu > i {
 
 .message-block > .message-list > .message-item > .message-info > h4 {
     color: #537380;
+    margin-top: 0;
 }
 
 .content .left-bar .contact-list > ul > li > .message-info > p, .message-block > .message-list > .message-item > .message-info > p {
@@ -218,6 +219,8 @@ header div.right-menu > i {
 .message-block > .message-list > .message-item > .message-info > p {
     color: #151515;
     font-size: 13px;
+    margin-top: 6px;
+    margin-bottom: 25px;
 }
 
 .content .left-bar .contact-list > ul > li > .message-clock, .message-block > .message-list > .message-item > .message-clock {

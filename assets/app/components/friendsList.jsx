@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getFriends, getFriendsSuccess, openDialog } from '../actions/friends';
+import { getMessages, getMessagesSuccess } from '../actions/messages';
 
 class FriendsList extends React.Component {
     static contextTypes = {
@@ -13,6 +14,7 @@ class FriendsList extends React.Component {
 
     openDialog(user) {
         this.props.openDialog(user);
+        this.props.getMessages(user.id);
     }
 
     render() {
@@ -57,6 +59,14 @@ export default connect(
                 }
         });
     },
-    openDialog: user => dispatch(openDialog(user))
+    openDialog: user => dispatch(openDialog(user)),
+    getMessages: (user_id) => {
+        dispatch(getMessages(user_id))
+            .then((response) => {
+                if(!response.error) {
+                    dispatch(getMessagesSuccess(response.payload.data));
+                } else {}
+            });
+    }
   })
 )(FriendsList);

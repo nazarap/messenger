@@ -1,19 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getMessages, getMessagesSuccess } from '../actions/messages';
 
-export default class MessageList extends React.Component {
+class MessageList extends React.Component {
+
+    componentDidMount() {
+        this.props.getMessages(this.props.friendsStore.openDialogWithUser.id);
+    }
+
+    displayDate(d) {
+        let date = new Date(d);
+        if(new Date(date).setHours(0,0,0,0) == new Date().setHours(0,0,0,0)) {
+            return (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) + ":"
+                + date.getMinutes() + ":" + date.getSeconds() + " " + (date.getHours() > 12 ? "AM" : "PM")
+        } else {
+            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+        }
+    }
+
     render() {
-        let messages = [];
+        let messages = this.props.messagesStore.messages;
+        let user = this.props.friendsStore.openDialogWithUser;
+        let activeUser = this.props.userStore.user;
 
-        let list = messages.map(function (message) {
+        let list = messages.map( message => {
             return (
                 <div className="message-item" key={message.id}>
-                    <img src={message.userImageURL}/>
+                    <img src={activeUser.id == message.user_from_id ? activeUser.img : user.img}/>
                     <div className="message-info">
-                        <h4>{message.userName}</h4>
-                        <p>{message.message}</p>
+                        <h4>{activeUser.id == message.user_from_id ?
+                            activeUser.first_name + " " + activeUser.last_name : user.first_name + " " + user.last_name}</h4>
+                        <p>{message.text}</p>
                     </div>
                     <div className="message-clock">
-                        <strong>{message.displayDate()}</strong>
+                        <strong>{this.displayDate(message.date)}</strong>
                     </div>
                 </div>
             );
@@ -31,3 +51,21 @@ export default class MessageList extends React.Component {
     )
     }
 }
+
+export default connect(
+    state => ({
+        messagesStore: state.messages,
+        userStore: state.user,
+        friendsStore: state.friends
+    }),
+    dispatch => ({
+        getMessages: (user_id) => {
+            dispatch(getMessages(user_id))
+                .then((response) => {
+                    if(!response.error) {
+                        dispatch(getMessagesSuccess(response.payload.data));
+                    } else {}
+                });
+    }
+})
+)(MessageList);

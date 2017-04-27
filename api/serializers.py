@@ -23,4 +23,4 @@ class FriendSerializer(serializers.HyperlinkedModelSerializer):
 class MessageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Message
-        fields = ('user_from_id', 'user_to_id', 'text', 'date')
+        fields = ('id', 'user_from_id', 'user_to_id', 'text', 'date')
