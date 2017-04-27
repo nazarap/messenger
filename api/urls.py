@@ -13,4 +13,5 @@ urlpatterns = [
 
     # Contacts request
     url(r'^contacts/$', local_views.ContactViewSet.as_view({'get': 'get_contacts_by_user'})),
+    url(r'^friends/$', local_views.FriendViewSet.as_view({'get': 'get_user_friend'})),
 ]

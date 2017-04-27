@@ -1,20 +1,16 @@
 from flask import json
 
-from api.models import User, Contact
+from api.models import User, Contact, Friend
 from rest_framework import viewsets
-from api.serializers import UserSerializer, ContactSerializer
-from rest_framework.response import Response
+from api.serializers import UserSerializer, ContactSerializer, FriendSerializer
 from rest_framework.request import Request
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
-from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import authentication, permissions, status
 from rest_framework.renderers import JSONRenderer
-
+from django.db.models import Q
 
 def get_token(request):
     try:
@@ -141,7 +137,7 @@ class ContactViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     renderer_classes = (JSONRenderer,)
 
-    # Get Contacts list bu User id
+    # Get Contacts list by User token
     def get_contacts_by_user(self, request):
 
         token = get_token(request)
@@ -156,6 +152,51 @@ class ContactViewSet(viewsets.ModelViewSet):
 
                 contacts = ContactSerializer(user.contacts, many=True, context=serializer_context).data
                 return Response({"contacts": contacts})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FriendViewSet(viewsets.ModelViewSet):
+    queryset = Friend.objects.all()
+    serializer_class = FriendSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    renderer_classes = (JSONRenderer,)
+
+    # Get User friends
+    def get_user_friend(self, request):
+
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+                try:
+
+                    friends = Friend.objects.filter(Q(user1_id=user.id) | Q(user2_id=user.id))
+
+                    user_ids_list = list()
+
+                    for friend in friends:
+                        if friend.user1_id == user.id:
+                            user_ids_list.append(friend.user2_id)
+                        else:
+                            user_ids_list.append(friend.user1_id)
+
+                    users = User.objects.filter(id__in=user_ids_list)
+                    serializer = UserSerializer(users, many=True, context=serializer_context)
+
+                    return Response({"friends": serializer.data})
+
+                except ObjectDoesNotExist:
+                    return Response({})
 
         except ObjectDoesNotExist:
             return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
