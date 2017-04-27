@@ -1,4 +1,4 @@
-from api.models import User, Contact, Friend
+from api.models import User, Contact, Friend, Message
 from rest_framework import serializers
 
 
@@ -18,3 +18,9 @@ class FriendSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Friend
         fields = ('user1_id', 'user2_id')
+
+
+class MessageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('user_from_id', 'user_to_id', 'text', 'date')

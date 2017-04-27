@@ -1,8 +1,8 @@
 from flask import json
 
-from api.models import User, Contact, Friend
+from api.models import User, Contact, Friend, Message
 from rest_framework import viewsets
-from api.serializers import UserSerializer, ContactSerializer, FriendSerializer
+from api.serializers import UserSerializer, ContactSerializer, FriendSerializer, MessageSerializer
 from rest_framework.request import Request
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
@@ -167,7 +167,7 @@ class FriendViewSet(viewsets.ModelViewSet):
     renderer_classes = (JSONRenderer,)
 
     # Get User friends
-    def get_user_friend(self, request):
+    def get_user_friends(self, request):
 
         token = get_token(request)
 
@@ -194,6 +194,43 @@ class FriendViewSet(viewsets.ModelViewSet):
                     serializer = UserSerializer(users, many=True, context=serializer_context)
 
                     return Response({"friends": serializer.data})
+
+                except ObjectDoesNotExist:
+                    return Response({})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    renderer_classes = (JSONRenderer,)
+
+    # Get User messages By User
+    def get_messages_by_user(self, request, user_id):
+
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+                try:
+
+                    messages = Message.objects.filter((Q(user_from_id=user.id) & Q(user_to_id=user_id) | Q(user_from_id=user_id)
+                                                       & Q(user_to_id=user.id))).order_by('date')
+
+                    serializer = MessageSerializer(messages, many=True, context=serializer_context)
+
+                    return Response({"messages": serializer.data})
 
                 except ObjectDoesNotExist:
                     return Response({})
