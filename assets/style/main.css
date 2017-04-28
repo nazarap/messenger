@@ -102,7 +102,7 @@ header div.right-menu > i {
 }
 
 .content .message-block {
-    width: 69%;
+    width: calc(69% - -7px);
     height: 100%;
     display: inline-block;
     vertical-align: top;
@@ -135,8 +135,8 @@ header div.right-menu > i {
 .content .message-block .message-list {
     overflow: auto;
     height: calc(100% - 135px);
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
 }
 
 .content .left-bar .contact-list {
