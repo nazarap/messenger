@@ -1,6 +1,6 @@
 from flask import json
 
-from api.models import User, Contact, Friend, Message
+from api.models import User, Contact, Friend, Message, ContactUser
 from rest_framework import viewsets
 from api.serializers import UserSerializer, ContactSerializer, FriendSerializer, MessageSerializer
 from rest_framework.request import Request
@@ -12,6 +12,8 @@ from rest_framework import authentication, permissions, status
 from rest_framework.renderers import JSONRenderer
 from django.db.models import Q
 from datetime import datetime
+import vk
+
 
 def get_token(request):
     try:
@@ -71,41 +73,53 @@ class LoginViewSet(viewsets.ModelViewSet):
             return Response({'token': token.key})
         return Response({"non_field_errors": "Unable to log in with provided credentials."}, status=status.HTTP_400_BAD_REQUEST)
 
+    def create_contacts_list(self, vk_token, user):
+        session = vk.Session(access_token=vk_token)
+        vk_api = vk.API(session)
+        user_friends = vk_api.friends.get(fields="first_name,last_name,photo_max")
+
+        for friend in user_friends:
+            try:
+                contact = Contact.objects.get(vk_id=friend["user_id"])
+            except ObjectDoesNotExist:
+                contact = Contact.objects.create(first_name=friend["first_name"], last_name=friend["last_name"],
+                                                 img=friend["photo_max"], vk_id=friend["user_id"], active=False)
+            ContactUser.objects.create(contact_id=contact, user_id=user)
+
     # Create new user and add user vk friend to Contact table
     def create_user(self, request):
-
         # Get params from request
         request_data = json.loads(request.body)
         vk_id = request_data.get('vk_id')
 
-        # Create new User in database
-        user = User.objects.create_user(username=request_data.get('login'),
-                                        password=request_data.get('password'),
-                                        img=request_data.get('img'),
-                                        first_name=request_data.get('first_name'),
-                                        last_name=request_data.get('last_name'),
-                                        vk_id=vk_id,
-                                        vk_token=request_data.get('vk_token'))
-
-        # Find and change user_id if new User have data in Contact table
         try:
-            user_in_contact = Contact.objects.get(vk_id=vk_id)
-            user_in_contact.user_id = user.id
-            user_in_contact.active = True
-            user_in_contact.save()
+            check_user = User.objects.get(vk_id=vk_id)
+            if check_user is not None:
+                return Response({"error": "Account for this VK user has created. Go to login or use another VK account."}, status=status.HTTP_400_BAD_REQUEST)
+
         except ObjectDoesNotExist:
-            user_in_contact = None
+            # Create new User in database
+            user = User.objects.create_user(username=request_data.get('login'),
+                                            password=request_data.get('password'),
+                                            img=request_data.get('img'),
+                                            first_name=request_data.get('first_name'),
+                                            last_name=request_data.get('last_name'),
+                                            vk_id=vk_id,
+                                            vk_token=request_data.get('vk_token'))
 
-        if user is not None:
-            token, created = Token.objects.get_or_create(user=user)
-            request.session['auth'] = token.key
+            # Find and change user_id if new User have data in Contact table
+            try:
+                user_in_contact = Contact.objects.get(vk_id=vk_id)
+                user_in_contact.user_id = user.id
+                user_in_contact.active = True
+                user_in_contact.save()
+            except ObjectDoesNotExist:
+                user_in_contact = None
 
-            serializer_context = {
-                'request': Request(request),
-            }
-            serializer = UserSerializer([user], many=True, context=serializer_context)
-            # Return User data and User token
-            return Response({'user': serializer.data[0], 'token': token.key})
+            if user is not None:
+                self.create_contacts_list(request_data.get('vk_token'), user)
+                return self.get_auth_token(request)
+
         return Response({"non_field_errors": "Unable to log in with provided credentials."}, status=status.HTTP_400_BAD_REQUEST)
 
     # Get User data and user token
