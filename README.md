@@ -68,6 +68,27 @@ $ sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-con
 Tutorial install postgres and create user and role. Connect Django to Postgres
 
 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04">How to use PostgreSQL with Django application</a>
+
+Install package for django and postgres
+```sh
+$ pip install --upgrade pip
+$ pip install django-cors-headers
+$ pip install djangorestframework
+$ pip install flask
+```
+```sh
+$ pip install vk
+```
+if your have error:
+    "DEPRECATION: Uninstalling a distutils installed project (requests) has been deprecated and will be removed 
+    in a future version. This is due to the fact that uninstalling a distutils project will only partially uninstall 
+    the project."
+    
+Run this command
+```sh
+$ pip install --ignore-installed vk
+```    
+Run server
 ```sh
 $ python manage.py runserver
 ```
@@ -87,7 +108,15 @@ $ npm i -g webpack
 Build/run project
 ```sh
 $ webpack
+```
+```sh
 $ webpack-dev-server
+```
+If your have error:
+    "SyntaxError: Use of const in strict mode."
+
+```sh
+$ nvm install stable
 ```
 
 React components structure
