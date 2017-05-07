@@ -26,13 +26,14 @@ class FriendsList extends React.Component {
                     key={friend.id}
                     onClick={this.openDialog.bind(this, friend)}>
                     <img src={friend.img}/>
-                    <div className="message-info">
-                        <h4>{friend.first_name}</h4>
-                        <p>Some message text ...</p>
-                    </div>
-                    <div className="message-clock">
-                        <strong>1/11/17</strong>
-                        <div>4</div>
+                    <div className="friend-info">
+                        <div className="message-info">
+                            <h4>{friend.first_name}</h4>
+                            <strong>1/11/17</strong>
+                        </div>
+                        <div className="message-clock">
+                            <p>Some message text ...</p>
+                        </div>
                     </div>
                 </li>
             );

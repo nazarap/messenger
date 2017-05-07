@@ -12,7 +12,6 @@ class ContactsList extends React.Component {
     }
 
     openDialog(item) {
-        console.log(this.isActive)
         this.props.isActive = item;
         this.props.contactsStore.contacts = this.props.contactsStore.contacts;
     }
@@ -24,13 +23,9 @@ class ContactsList extends React.Component {
             return (
                 <li key={contact.id} onClick={this.openDialog.bind(this, contact)}>
                     <img src={contact.img}/>
-                    <div className="message-info">
-                        <h4>{contact.first_name}</h4>
-                        <p>Some message text ...</p>
-                    </div>
-                    <div className="message-clock">
-                        <strong>1/11/17</strong>
-                        <div>4</div>
+                    <div className="message-info contacts-info">
+                        <h4>{contact.first_name} {contact.last_name}</h4>
+                        {contact.active ? <div className="active-contact"><div></div> active</div> : ''}
                     </div>
                 </li>
             );

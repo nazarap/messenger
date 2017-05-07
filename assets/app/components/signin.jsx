@@ -10,7 +10,19 @@ class SignIn extends React.Component {
 
     signup() {
         let res = this.props.login({login: this.login.value, password: this.password.value})
-    }
+    };
+
+    signupKeyPress(e) {
+        if (e.key === 'Enter') {
+            this.signup();
+        }
+    };
+
+    passwordFocus(e) {
+        if (e.key === 'Enter') {
+            this.password.focus();
+        }
+    };
 
     render() {
         let error = this.props.userStore.error || "";
@@ -18,8 +30,10 @@ class SignIn extends React.Component {
             <div className="login-block">
                 <h4>Sign in</h4>
                 <p>Please enter your login (vk login) and your password.</p>
-                <input placeholder="Login" ref={(login) => { this.login = login }}/>
-                <input placeholder="Password" ref={(password) => { this.password = password }} type="password"/>
+                <input placeholder="Login" onKeyPress={this.passwordFocus.bind(this)}
+                       ref={(login) => { this.login = login }}/>
+                <input placeholder="Password" onKeyPress={this.signupKeyPress.bind(this)}
+                       ref={(password) => { this.password = password }} type="password"/>
                 <button className="next-btn" onClick={this.signup.bind(this)}>Next <i className="fa fa-angle-right" aria-hidden="true"></i></button>
             </div>
         )

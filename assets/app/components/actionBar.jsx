@@ -6,7 +6,16 @@ import { browserHistory } from 'react-router';
 
 class ActionBar extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpenMenu: false
+        }
+    }
+
     componentDidMount() {
+        document.addEventListener('click', this.closeMenu.bind(this), true);
         if(sessionStorage.getItem('authToken') && !this.props.userStore.user.id) {
             this.props.getUser()
         }
@@ -20,6 +29,14 @@ class ActionBar extends React.Component {
         browserHistory.push('/login');
     }
 
+    openMenu() {
+        this.setState({isOpenMenu: true});
+    }
+
+    closeMenu() {
+        this.setState({isOpenMenu: false});
+    }
+
     render() {
         let user = this.props.userStore.user;
         return (
@@ -28,10 +45,17 @@ class ActionBar extends React.Component {
                     <Link to={`/messaging`}>
                         <h1>Messenger</h1>
                     </Link>
-                    <div className="right-menu" onClick={this.logout.bind(this)}>
+                    <div className="right-menu" onClick={this.openMenu.bind(this)}>
                         <h4>{user.first_name}</h4>
                         <img src={user.img}/>
                         <i className="fa fa-caret-down" aria-hidden="true"></i>
+                    </div>
+                    <div className={this.state.isOpenMenu ? 'top-dropdown-menu' : 'top-dropdown-menu-close'}>
+                        <ul>
+                            <li onClick={this.logout.bind(this)}>Settings</li>
+                            <hr></hr>
+                            <li onClick={this.logout.bind(this)}>Log out</li>
+                        </ul>
                     </div>
                 </header>
                 {this.props.children}

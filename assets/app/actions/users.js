@@ -11,7 +11,6 @@ export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 //const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
 
 export function getUser() {
-
   const request = axios({
     method: 'post',
     url: `http://localhost:8000/api/user/data/`,

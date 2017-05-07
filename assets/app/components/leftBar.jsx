@@ -10,7 +10,7 @@ export default class LeftBar extends React.Component {
         this.types = {
             'active': 1,
             'vk': 2
-        }
+        };
 
         this.state = {
             listType: this.types['active']
@@ -24,6 +24,7 @@ export default class LeftBar extends React.Component {
     render() {
         return (<div className="left-bar">
             <div className="search-block">
+                <i className="fa fa-search" aria-hidden="true"></i>
                 <input placeholder="Search ... "/>
             </div>
             <div className="left-btn-list">

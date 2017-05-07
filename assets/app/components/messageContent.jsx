@@ -8,10 +8,12 @@ class MessageContent extends React.Component {
 
     componentDidMount() {}
 
-    send() {
-        if(!this.messageText.value || this.messageText.value == "") return;
-        this.props.sendMessage(this.props.friendsStore.openDialogWithUser.id, this.messageText.value);
-        this.messageText.value = "";
+    send(e) {
+        if (e === 'SendButton' || (e.key === 'Enter' && e.ctrlKey)) {
+            if (!this.messageText.value || this.messageText.value == "") return;
+            this.props.sendMessage(this.props.friendsStore.openDialogWithUser.id, this.messageText.value);
+            this.messageText.value = "";
+        }
     }
 
     render() {
@@ -27,14 +29,16 @@ class MessageContent extends React.Component {
                     </div>
                     <MessageList/>
                     <div className="message-send">
-                        <textarea rows="4" cols="50" placeholder="Write a message here..." ref={(messageText) => { this.messageText = messageText }} ></textarea>
-                        <button onClick={this.send.bind(this)}>
+                        <textarea rows="4" cols="50" onKeyPress={this.send.bind(this)}
+                                  placeholder="Write a message here..." ref={(messageText) => { this.messageText = messageText }} ></textarea>
+                        <button onClick={this.send.bind(this, "SendButton")}>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
             :
                 <div className="message-block">
+                    <i className="fa fa-envelope-open-o" aria-hidden="true"></i>
                     <h1>Please select dialog for display in this window</h1>
                 </div>
         )
