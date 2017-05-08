@@ -51,6 +51,39 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Get User data by Token
+    def find_user_by_name(self, request):
+
+        # Get params from request
+        request_data = json.loads(request.body)
+        search_key = request_data.get('search_key')
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                serializer_context = {
+                    'request': Request(request),
+                }
+                serializer = UserSerializer([user], many=True, context=serializer_context)
+
+                users = User.objects.filter(~Q(id = user.id))
+                for term in search_key.split(' '):
+                    users = users.filter(Q(first_name__istartswith = term) | Q(first_name__endswith = term)
+                    | Q(last_name__istartswith = term) | Q(last_name__endswith = term))
+
+                serializer_context = {
+                    'request': Request(request),
+                }
+                serializer = UserSerializer(users, many=True, context=serializer_context)
+
+                # Return User data
+                return Response({'users': serializer.data})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

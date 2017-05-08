@@ -98,7 +98,18 @@ header div.right-menu > i {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-top: 10px;
-    width: 85%;
+    width: 73%;
+}
+
+.content .left-bar .search-block i.fa-circle-o-notch {
+    cursor: pointer;
+    width: 25px;
+}
+
+.content .left-bar .search-block i.fa-circle-o-notch span {
+    color: #537380;
+    vertical-align: -2px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
 }
 
 .content .left-bar .search-block i {
@@ -538,17 +549,54 @@ header.login-header .cancel-left-btn i {
     color: white;
 }
 
-.top-dropdown-menu {
+header > .top-dropdown-menu {
     display: inline-block;
     position: absolute;
     right: 20%;
     top: 52px;
-    background: #FFF none repeat scroll 0% 0%;
+    background: #FFF none repeat scroll 0 0;
     border: 1px solid #C5D0DB;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: opacity 100ms linear 0s, top 100ms linear 0s, visibility 100ms linear 0s;
     border-radius: 3px;
     width: 130px;
+}
+
+.fa-circle-o-notch > .top-dropdown-menu > input{
+    width: 10px !important;
+    display: block;
+}
+
+.fa-circle-o-notch:hover > .top-dropdown-menu {
+    display: inline-block;
+}
+
+.fa-circle-o-notch > .top-dropdown-menu {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    display: none;
+    position: absolute;
+    margin-left: 8px;
+    background: #FFF none repeat scroll 0 0;
+    border: 1px solid #C5D0DB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: opacity 100ms linear 0s, top 100ms linear 0s, visibility 100ms linear 0s;
+    border-radius: 3px;
+    width: 130px;
+}
+
+.fa-circle-o-notch > .top-dropdown-menu:before {
+    position: absolute;
+    pointer-events: none;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    border-width: 6px;
+    right: 100%;
+    top: 0;
+    border-right-color: #c5d0db
 }
 
 hr {
@@ -580,7 +628,7 @@ hr {
     background: rgba(83, 115, 128, 0.12);
 }
 
-.top-dropdown-menu:before{
+header > .top-dropdown-menu:before{
     position: absolute;
     pointer-events: none;
     border: solid transparent;
@@ -590,7 +638,7 @@ hr {
     bottom: 100%;
     right: 42px}
 
-.top-dropdown-menu:before{
+header > .top-dropdown-menu:before{
     border-width: 6px;
     margin: 0 -6px;
     border-bottom-color: #c5d0db
@@ -604,4 +652,88 @@ hr {
 
 button:focus, input:focus, textarea:focus {
     outline: none !important;
+}
+
+
+@keyframes cardEnter {
+    0%, 20%, 40%, 60%, 80%, 100% {
+        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.radio {
+    display: inline-block;
+    width: 100%;
+    font-size: 13px;
+    line-height: 18px;
+    cursor: pointer;
+}
+
+.radio input {
+    height: 1px;
+    width: 1px;
+    display: none;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    color: #546775;
+    font: 400 18px "PT Sans",sans-serif;
+    cursor: pointer;
+}
+
+.radio input:checked + .outer {
+    border: 2px solid rgb(83, 115, 128);
+}
+
+.radio .outer {
+    height: 13px;
+    width: 13px;
+    display: block;
+    float: left;
+    margin: 2px 9px 10px 10px;
+    border: 2px solid rgb(83, 115, 128);
+    border-radius: 50%;
+    background-color: #FFF;
+}
+
+.radio input:checked + .outer .inner {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio .inner {
+    transition: all 0.25s ease-in-out 0s;
+    height: 9px;
+    width: 9px;
+    transform: scale(0);
+    display: block;
+    margin: 2px;
+    border-radius: 50%;
+    background-color: rgb(83, 115, 128);
+    opacity: 0;
 }

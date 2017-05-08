@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^friends/$', local_views.FriendViewSet.as_view({'get': 'get_user_friends'})),
     url(r'^messages/(?P<user_id>[0-9]+)/$', local_views.MessageViewSet.as_view({'get': 'get_messages_by_user'})),
     url(r'^send/message/$', local_views.MessageViewSet.as_view({'post': 'send_message'})),
+
+    url(r'^find/users/$', local_views.UserViewSet.as_view({'post': 'find_user_by_name'})),
 ]
