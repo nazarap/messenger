@@ -74,8 +74,8 @@ header div.right-menu > i {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     background-color: white;
-    margin-top: 1px;
-    height: calc(100% - 57px);
+    margin-top: 11px;
+    height: calc(100% - 67px);
 }
 
 .content .left-bar {
@@ -287,7 +287,7 @@ header div.right-menu > i {
     color: #b3b3b3;
     float: right;
     margin-right: 5px;
-    margin-top: 6px;
+    margin-top: 1px;
 }
 
 .content .left-bar .contact-list > ul > li > .friend-info > .message-clock > div   {
@@ -355,6 +355,42 @@ header div.right-menu > i {
     cursor: pointer;
 }
 
+.message-block > .message-send > button > .info-box {
+    position: absolute;
+    opacity: 1;
+    margin-top: -40px;
+    margin-left: -110px;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 3px;
+    z-index: 1501;
+    cursor: default;
+    font-size: 12.5px;
+    color: #222;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    line-height: 1.154;
+    font-weight: 400;
+    display: none;
+}
+
+.message-block > .message-send > button:hover > .info-box {
+    display: inline-block;
+}
+
+.message-block > .message-send > button > .info-box div {
+    color: #FFF;
+    font-size: 1em;
+    padding: 4px 7px 5px;
+    line-height: 1.154;
+    white-space: nowrap;
+    pointer-events: auto;
+    text-align: left;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    line-height: 1.154;
+    font-weight: 400;
+}
+
 .message-list-top {
     width: 100%;
     height: 60px;
@@ -365,6 +401,24 @@ header div.right-menu > i {
 header.login-header {
     background-color: #537380;
     height: 250px;
+}
+
+header.login-header .cancel-left-btn {
+    margin-top: 200px;
+    margin-left: calc(50% - 325px);
+    border: medium none;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background: inherit;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+header.login-header .cancel-left-btn i {
+    font-size: 17px;
+    font-weight: 600;
+    vertical-align: -1px;
+    margin-left: 5px;
 }
 
 .login-block {
@@ -441,6 +495,7 @@ header.login-header {
 /*Create account style*/
 
 .account-create-block {
+    margin-bottom: 10px;
     margin-left: calc(50% - 210px);
     width: 280px;
     padding-bottom: 40px;

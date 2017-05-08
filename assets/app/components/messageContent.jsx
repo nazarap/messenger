@@ -32,6 +32,7 @@ class MessageContent extends React.Component {
                         <textarea rows="4" cols="50" onKeyPress={this.send.bind(this)}
                                   placeholder="Write a message here..." ref={(messageText) => { this.messageText = messageText }} ></textarea>
                         <button onClick={this.send.bind(this, "SendButton")}>
+                            <div className="info-box"><div>CTRL + Enter for send message</div></div>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </div>

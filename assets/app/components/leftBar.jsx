@@ -21,11 +21,15 @@ export default class LeftBar extends React.Component {
         this.setState({listType: type});
     }
 
+    findUser() {
+        console.log("hello")
+    }
+
     render() {
         return (<div className="left-bar">
             <div className="search-block">
                 <i className="fa fa-search" aria-hidden="true"></i>
-                <input placeholder="Search ... "/>
+                <input placeholder="Search ... " onKeyPress={this.findUser.bind(this)}/>
             </div>
             <div className="left-btn-list">
                 <button className={ this.state.listType == this.types['active'] ? 'active' : ''} onClick={this.changeListType.bind(this, this.types['active'])}>active</button>

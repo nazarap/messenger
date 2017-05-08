@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { Link } from 'react-router'
 import { createUser, createUserSuccess } from '../actions/users';
 
 class CreateAccount extends React.Component {
@@ -39,7 +40,11 @@ class CreateAccount extends React.Component {
     render() {
         return (
             <div>
-                <header className="login-header"></header>
+                <header className="login-header">
+                    <Link to={`/login`}>
+                        <button className="cancel-left-btn"><i className="fa fa-angle-left" aria-hidden="true"></i> Cancel</button>
+                    </Link>
+                </header>
 
                 <div className="login-block account-create-block">
                     <img src={this.state.user.photo_200}/>
