@@ -78,6 +78,13 @@ header div.right-menu > i {
     height: calc(100% - 67px);
 }
 
+@media (min-width: 1800px) {
+    .content {
+        width: 50% !important;
+        margin-left: 25%; !important;
+    }
+}
+
 .content .left-bar {
     display: inline-block;
     height: 100%;
@@ -98,7 +105,7 @@ header div.right-menu > i {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-top: 10px;
-    width: 73%;
+    width: calc(100% - 66px);
 }
 
 .content .left-bar .search-block i.fa-circle-o-notch {
@@ -562,26 +569,28 @@ header > .top-dropdown-menu {
     width: 130px;
 }
 
-.fa-circle-o-notch > .top-dropdown-menu > input{
+.fa-circle-o-notch > .top-dropdown-menu > input {
     width: 10px !important;
     display: block;
 }
 
 .fa-circle-o-notch:hover > .top-dropdown-menu {
-    display: inline-block;
+    opacity: 1;
+    transition:none;
 }
 
 .fa-circle-o-notch > .top-dropdown-menu {
+    opacity: 0;
+    transition:opacity 700ms;
+    display: inline-block;
     padding-top: 15px;
     padding-bottom: 5px;
     padding-left: 10px;
-    display: none;
     position: absolute;
     margin-left: 8px;
     background: #FFF none repeat scroll 0 0;
     border: 1px solid #C5D0DB;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: opacity 100ms linear 0s, top 100ms linear 0s, visibility 100ms linear 0s;
     border-radius: 3px;
     width: 130px;
 }
@@ -654,35 +663,6 @@ button:focus, input:focus, textarea:focus {
     outline: none !important;
 }
 
-
-@keyframes cardEnter {
-    0%, 20%, 40%, 60%, 80%, 100% {
-        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-
-    0% {
-        opacity: 0;
-        transform: scale3d(0.3, 0.3, 0.3);
-    }
-    20% {
-        transform: scale3d(1.1, 1.1, 1.1);
-    }
-    40% {
-        transform: scale3d(0.9, 0.9, 0.9);
-    }
-    60% {
-        opacity: 1;
-        transform: scale3d(1.03, 1.03, 1.03);
-    }
-    80% {
-        transform: scale3d(0.97, 0.97, 0.97);
-    }
-    100% {
-        opacity: 1;
-        transform: scale3d(1, 1, 1);
-    }
-}
-
 .radio {
     display: inline-block;
     width: 100%;
@@ -706,11 +686,11 @@ button:focus, input:focus, textarea:focus {
     cursor: pointer;
 }
 
-.radio input:checked + .outer {
+.radio input:checked + .radiobtn {
     border: 2px solid rgb(83, 115, 128);
 }
 
-.radio .outer {
+.radio .radiobtn {
     height: 13px;
     width: 13px;
     display: block;
@@ -721,12 +701,12 @@ button:focus, input:focus, textarea:focus {
     background-color: #FFF;
 }
 
-.radio input:checked + .outer .inner {
+.radio input:checked + .radiobtn .sp-radiobtn {
     transform: scale(1);
     opacity: 1;
 }
 
-.radio .inner {
+.radio .sp-radiobtn {
     transition: all 0.25s ease-in-out 0s;
     height: 9px;
     width: 9px;

@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^send/message/$', local_views.MessageViewSet.as_view({'post': 'send_message'})),
 
     url(r'^find/users/$', local_views.UserViewSet.as_view({'post': 'find_user_by_name'})),
+    url(r'^find/contacts/$', local_views.ContactViewSet.as_view({'post': 'find_contacts_by_name'})),
 ]

@@ -38,7 +38,7 @@ export function openDialog(user) {
   };
 }
 
-export function searchFriends(searchKey) {
+export function searchFriends(searchKey, isAll) {
 
     const request = axios({
         method: 'post',
@@ -48,6 +48,7 @@ export function searchFriends(searchKey) {
         },
         data: {
             search_key: searchKey,
+            is_all: isAll
         },
     });
 

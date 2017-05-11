@@ -2,6 +2,7 @@ import React from 'react';
 import ContactsList from './contactsList.jsx';
 import FriendsList from './friendsList.jsx';
 import { searchFriends, searchFriendsSuccess, getFriends, getFriendsSuccess } from '../actions/friends';
+import { searchContacts, searchContactsSuccess } from '../actions/contacts';
 import { connect } from 'react-redux';
 
 class LeftBar extends React.Component {
@@ -15,7 +16,14 @@ class LeftBar extends React.Component {
             'search': 3
         };
 
+        this.searchTypes = {
+            0 : 'friends',
+            1: 'vk_friends',
+            2 : 'users'
+        };
+
         this.state = {
+            searchType: this.searchTypes[0],
             listType: this.types['active']
         }
     }
@@ -32,10 +40,24 @@ class LeftBar extends React.Component {
             if(!this.search.value || this.search.value == "") {
                 this.changeListType(this.types['active']);
             } else {
-                this.changeListType(this.types['search']);
-                this.props.searchFriends(this.search.value);
+                switch(this.state.searchType) {
+                    case this.searchTypes[1]:
+                        this.props.searchVkFriends(this.search.value, this);
+                        break;
+                    case this.searchTypes[0]:
+                        this.props.searchFriends(this.search.value, false, this, this.types['active']);
+                        break;
+                    case this.searchTypes[2]:
+                        this.props.searchFriends(this.search.value, true, this, this.types['search']);
+                }
             }
         }
+    }
+
+    searchCheckListener(changeEvent) {
+        this.setState({
+            searchType: changeEvent.target.value
+        });
     }
 
     render() {
@@ -46,9 +68,12 @@ class LeftBar extends React.Component {
                        onKeyPress={this.findUser.bind(this)}/>
                 <i className="fa fa-circle-o-notch" aria-hidden="true">
                     <div className='top-dropdown-menu'>
-                        <label className="radio"><input id="radio1" type="radio" name="radios"/><span className="outer"><span className="inner"></span></span>Friends</label>
-                        <label className="radio"><input id="radio2" type="radio" name="radios"/><span className="outer"><span className="inner"></span></span>VK Friends</label>
-                        <label className="radio"><input id="radio3" type="radio" name="radios"/><span className="outer"><span className="inner"></span></span>Other users</label>
+                        <label className="radio"><input type="radio" value={this.searchTypes[0]} name="search" checked={this.state.searchType === this.searchTypes[0]}
+                      onChange={this.searchCheckListener.bind(this)} /><span className="radiobtn"><span className="sp-radiobtn"></span></span>Friends</label>
+                        <label className="radio"><input type="radio" value={this.searchTypes[1]} name="search" checked={this.state.searchType === this.searchTypes[1]}
+                      onChange={this.searchCheckListener.bind(this)} /><span className="radiobtn"><span className="sp-radiobtn"></span></span>VK Friends</label>
+                        <label className="radio"><input type="radio" value={this.searchTypes[2]} name="search" checked={this.state.searchType === this.searchTypes[2]}
+                      onChange={this.searchCheckListener.bind(this)} /><span className="radiobtn"><span className="sp-radiobtn"></span></span>Other users</label>
                     </div>
                 </i>
             </div>
@@ -77,11 +102,22 @@ export default connect(
                     }
                 });
         },
-        searchFriends: (searchKey) => {
-            dispatch(searchFriends(searchKey))
+        searchFriends: (searchKey, isAll, leftBarThis, type) => {
+            dispatch(searchFriends(searchKey, isAll))
                 .then((response) => {
                     if(!response.error) {
+                        leftBarThis.changeListType(type);
                         dispatch(searchFriendsSuccess(response.payload.data));
+                    } else {
+                    }
+                });
+        },
+        searchVkFriends: (searchKey, leftBarThis) => {
+            dispatch(searchContacts(searchKey))
+                .then((response) => {
+                    if(!response.error) {
+                        leftBarThis.changeListType(leftBarThis.types['vk']);
+                        dispatch(searchContactsSuccess(response.payload.data));
                     } else {
                     }
                 });

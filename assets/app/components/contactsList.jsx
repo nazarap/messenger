@@ -8,7 +8,9 @@ class ContactsList extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getContactsList()
+        if(!this.props.contactsStore.loading) {
+            this.props.getContactsList();
+        }
     }
 
     openDialog(item) {

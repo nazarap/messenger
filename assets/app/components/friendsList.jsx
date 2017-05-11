@@ -9,7 +9,9 @@ class FriendsList extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getFriendsList();
+        if(!this.props.friendsStore.loading) {
+            this.props.getFriendsList();
+        }
     }
 
     openDialog(user) {
