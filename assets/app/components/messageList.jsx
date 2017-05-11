@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getMessages, getMessagesSuccess } from '../actions/messages';
+import moment from 'moment';
 
 class MessageList extends React.Component {
 
@@ -11,10 +12,9 @@ class MessageList extends React.Component {
     displayDate(d) {
         let date = new Date(d);
         if(new Date(date).setHours(0,0,0,0) == new Date().setHours(0,0,0,0)) {
-            return (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) + ":"
-                + date.getMinutes() + ":" + date.getSeconds() + " " + (date.getHours() > 12 ? "PM" : "AM")
+            return moment(date).format('h:mm:ss A')
         } else {
-            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+            return moment(date).format('DD/MM/YY')
         }
     }
 

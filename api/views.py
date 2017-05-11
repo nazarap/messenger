@@ -260,6 +260,24 @@ class FriendViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     renderer_classes = (JSONRenderer,)
 
+    # Get last message for users list
+    def get_last_message_for_user(self, request, user1_id, user2_id):
+
+        try:
+            serializer_context = {
+                'request': Request(request),
+            }
+            messages = Message.objects.filter((Q(user_from_id=user1_id) & Q(user_to_id=user2_id) | Q(user_from_id=user2_id)
+                                               & Q(user_to_id=user1_id))).order_by('-date')[:1]
+
+            serializer = MessageSerializer(messages, many=True, context=serializer_context)
+            if len(serializer.data) > 0:
+                return serializer.data[0]
+            else:
+                return None
+        except ObjectDoesNotExist:
+            return None
+
     # Get User friends
     def get_user_friends(self, request):
 
@@ -277,17 +295,22 @@ class FriendViewSet(viewsets.ModelViewSet):
                     friends = Friend.objects.filter(Q(user1_id=user.id) | Q(user2_id=user.id))
 
                     user_ids_list = list()
+                    messages = {}
 
                     for friend in friends:
+                        message = self.get_last_message_for_user(request, friend.user2_id, friend.user1_id)
                         if friend.user1_id == user.id:
                             user_ids_list.append(friend.user2_id)
+                            if message is not None:
+                                messages[friend.user2_id] = message
                         else:
                             user_ids_list.append(friend.user1_id)
+                            if message is not None:
+                                messages[friend.user1_id] = message
 
                     users = User.objects.filter(id__in=user_ids_list)
                     serializer = UserSerializer(users, many=True, context=serializer_context)
-
-                    return Response({"friends": serializer.data})
+                    return Response({"friends": serializer.data, "messages": messages})
 
                 except ObjectDoesNotExist:
                     return Response({})
@@ -348,15 +371,14 @@ class MessageViewSet(viewsets.ModelViewSet):
             user = Token.objects.get(key=token).user
 
             if user is not None:
-                serializer_context = {
-                    'request': Request(request),
-                }
                 try:
+                    try:
+                        Friend.objects.get((Q(user2_id=user.id) & Q(user1_id=user_id)) | (Q(user1_id=user.id) & Q(user2_id=user_id)))
+                    except ObjectDoesNotExist:
+                        Friend.objects.create(user1_id=user.id, user2_id=user_id)
 
                     messages = Message.objects.create(user_from_id=user.id, user_to_id=user_id, text=text,
                                                       date=datetime.now())
-
-                    # serializer = MessageSerializer(messages, many=True, context=serializer_context)
 
                     return self.get_messages_by_user(request, user_id)
 

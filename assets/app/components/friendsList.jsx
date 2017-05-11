@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getFriends, getFriendsSuccess, openDialog } from '../actions/friends';
 import { getMessages, getMessagesSuccess } from '../actions/messages';
+import moment from 'moment';
 
 class FriendsList extends React.Component {
     static contextTypes = {
@@ -14,6 +15,15 @@ class FriendsList extends React.Component {
         }
     }
 
+    displayDate(d) {
+        let date = new Date(d);
+        if(new Date(date).setHours(0,0,0,0) == new Date().setHours(0,0,0,0)) {
+            return moment(date).format('h:mm:ss A')
+        } else {
+            return moment(date).format('DD/MM/YY')
+        }
+    }
+
     openDialog(user) {
         this.props.openDialog(user);
         this.props.getMessages(user.id);
@@ -21,6 +31,7 @@ class FriendsList extends React.Component {
 
     render() {
         let friends = this.props.friendsStore.friends;
+        let messages = this.props.friendsStore.messages;
 
         let list = friends.map( friend => {
             return (
@@ -31,10 +42,10 @@ class FriendsList extends React.Component {
                     <div className="friend-info">
                         <div className="message-info">
                             <h4>{friend.first_name}</h4>
-                            <strong>1/11/17</strong>
+                            <strong>{this.displayDate(messages[friend.id].date)}</strong>
                         </div>
                         <div className="message-clock">
-                            <p>Some message text ...</p>
+                            <p>{messages[friend.id].user_to_id == friend.id ? "You:" : ""} {messages[friend.id].text}</p>
                         </div>
                     </div>
                 </li>

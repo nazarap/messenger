@@ -2,7 +2,7 @@ import {
     GET_FRIENDS, GET_FRIENDS_SUCCESS, SEARCH_FRIENDS, SEARCH_FRIENDS_SUCCESS, OPEN_DIALOG
 } from '../actions/friends';
 
-const INITIAL_STATE = {friends: [], loading: false, openDialogWithUser: {}};
+const INITIAL_STATE = {friends: [], messages: [], loading: false, openDialogWithUser: {}};
 
 export default function(state = INITIAL_STATE, action) {
   let error;
