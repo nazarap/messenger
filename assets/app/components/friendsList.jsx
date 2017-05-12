@@ -16,6 +16,7 @@ class FriendsList extends React.Component {
     }
 
     displayDate(d) {
+        if(!d) return "";
         let date = new Date(d);
         if(new Date(date).setHours(0,0,0,0) == new Date().setHours(0,0,0,0)) {
             return moment(date).format('h:mm:ss A')
@@ -34,6 +35,7 @@ class FriendsList extends React.Component {
         let messages = this.props.friendsStore.messages;
 
         let list = friends.map( friend => {
+            let message = messages[friend.id] || {text: "", date: null};
             return (
                 <li className={ this.props.friendsStore.openDialogWithUser.id == friend.id ? 'active' : ''}
                     key={friend.id}
@@ -42,10 +44,10 @@ class FriendsList extends React.Component {
                     <div className="friend-info">
                         <div className="message-info">
                             <h4>{friend.first_name}</h4>
-                            <strong>{this.displayDate(messages[friend.id].date)}</strong>
+                            <strong>{this.displayDate(message.date)}</strong>
                         </div>
                         <div className="message-clock">
-                            <p>{messages[friend.id].user_to_id == friend.id ? "You:" : ""} {messages[friend.id].text}</p>
+                            <p>{message.user_to_id == friend.id ? "You:" : ""} {message.text}</p>
                         </div>
                     </div>
                 </li>

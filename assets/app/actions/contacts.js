@@ -13,7 +13,7 @@ export function getContacts() {
     method: 'get',
     url: 'http://localhost:8000/api/contacts/',
     headers: {
-      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
     }
   });
 
@@ -36,7 +36,7 @@ export function searchContacts(searchKey, isAll) {
         method: 'post',
         url: 'http://localhost:8000/api/find/contacts/',
         headers: {
-            'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+            'Authorization': `Token ${localStorage.getItem('authToken')}`
         },
         data: {
             search_key: searchKey

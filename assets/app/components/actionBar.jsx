@@ -16,16 +16,16 @@ class ActionBar extends React.Component {
 
     componentDidMount() {
         document.addEventListener('click', this.closeMenu.bind(this), true);
-        if(sessionStorage.getItem('authToken') && !this.props.userStore.user.id) {
+        if(localStorage.getItem('authToken') && !this.props.userStore.user.id) {
             this.props.getUser()
         }
-        if(!sessionStorage.getItem('authToken') && !this.props.userStore.user.id) {
+        if(!localStorage.getItem('authToken') && !this.props.userStore.user.id) {
             browserHistory.push('/login');
         }
     }
 
     logout() {
-        sessionStorage.removeItem('authToken');
+        localStorage.removeItem('authToken');
         browserHistory.push('/login');
     }
 

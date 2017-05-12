@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 export default class Login extends React.Component {
 
     componentDidMount() {
-        if(sessionStorage.getItem('authToken')) {
+        if(localStorage.getItem('authToken')) {
             browserHistory.push('/messaging');
         }
     }

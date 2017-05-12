@@ -10,7 +10,7 @@ export function getMessages(user_id) {
     method: 'get',
     url: `http://localhost:8000/api/messages/${user_id}/`,
     headers: {
-      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
     }
   });
 
@@ -37,7 +37,7 @@ export function sendMessage(user_id, text) {
     method: 'post',
     url: `http://localhost:8000/api/send/message/`,
     headers: {
-      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
     },
     data: {
         user_id: user_id,

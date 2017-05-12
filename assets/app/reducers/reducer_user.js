@@ -18,7 +18,7 @@ export default function(state = INITIAL_STATE, action) {
         return { ...state, loading: true};
 
     case LOGIN_SUCCESS:
-        sessionStorage.setItem('authToken', action.payload.token);
+        localStorage.setItem('authToken', action.payload.token);
         return { ...state, user: action.payload.user, loading: false};
 
     case LOGIN_ERROR:
@@ -28,7 +28,7 @@ export default function(state = INITIAL_STATE, action) {
         return { ...state, loading: true};
 
     case CREATE_USER_SUCCESS:
-        sessionStorage.setItem('authToken', action.payload.token);
+        localStorage.setItem('authToken', action.payload.token);
         return { ...state, ...action.payload.user, loading: false};
 
     default:

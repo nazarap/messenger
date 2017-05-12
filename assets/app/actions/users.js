@@ -15,7 +15,7 @@ export function getUser() {
     method: 'post',
     url: `http://localhost:8000/api/user/data/`,
     headers: {
-      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
     }
   });
 

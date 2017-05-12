@@ -14,7 +14,7 @@ export function getFriends() {
     method: 'get',
     url: 'http://localhost:8000/api/friends/',
     headers: {
-      'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
     }
   });
 
@@ -44,7 +44,7 @@ export function searchFriends(searchKey, isAll) {
         method: 'post',
         url: 'http://localhost:8000/api/find/users/',
         headers: {
-            'Authorization': `Token ${sessionStorage.getItem('authToken')}`
+            'Authorization': `Token ${localStorage.getItem('authToken')}`
         },
         data: {
             search_key: searchKey,

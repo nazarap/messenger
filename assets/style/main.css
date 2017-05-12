@@ -233,6 +233,10 @@ header div.right-menu > i {
     vertical-align: top;
 }
 
+.content .left-bar .contact-list > ul > li > .friend-info .message-info strong {
+    margin-top: 7px !important;
+}
+
 .content .left-bar .contact-list > ul > li .message-info {
     display: inline-block;
     width: 100%;
@@ -305,7 +309,7 @@ header div.right-menu > i {
     color: #b3b3b3;
     float: right;
     margin-right: 5px;
-    margin-top: 1px;
+    margin-top: 2px;
 }
 
 .content .left-bar .contact-list > ul > li > .friend-info > .message-clock > div   {

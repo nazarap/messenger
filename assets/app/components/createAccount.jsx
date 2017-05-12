@@ -23,7 +23,7 @@ class CreateAccount extends React.Component {
             this.newUser.vk_id = data.response[0].uid;
             this.setState({user: data.response[0]});
         });
-        if(sessionStorage.getItem('authToken')) {
+        if(localStorage.getItem('authToken')) {
             browserHistory.push('/messaging');
         }
     }
