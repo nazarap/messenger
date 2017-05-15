@@ -722,3 +722,151 @@ button:focus, input:focus, textarea:focus {
     background-color: rgb(83, 115, 128);
     opacity: 0;
 }
+
+
+/*Settings popup styles*/
+
+.popup-background {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(26,26,26,.7);
+    z-index: 1040;
+}
+
+.setting-popup {
+    width: 450px;
+    position: absolute;
+    background: white;
+    z-index: 1050;
+    left: calc(50% - 225px);
+    top: 10%;
+    padding-bottom: 90px;
+}
+
+.setting-popup > .popup-header {
+    background: #537380;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.setting-popup > .popup-header > .main-header {
+    display: block;
+}
+
+.setting-popup > .popup-header > .main-header > h4 {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    font-size: 14px;
+    color: white;
+    display: inline-block;
+}
+
+.setting-popup > .popup-header > .main-header > .btn-s {
+    display: inline-block;
+    float: right;
+}
+
+.setting-popup > .popup-header > .main-header > .btn-s > button {
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 20px;
+    border: none;
+    background: none;
+}
+
+.setting-popup > .popup-header > .main-header > .btn-s > button:hover {
+    color: #a5bac3;
+}
+
+.setting-popup > .popup-header .image {
+    cursor: pointer;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    margin-right: 30px;
+    border-radius: 100px;
+    -webkit-box-shadow: 0 3px 5px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 3px 5px rgba(0,0,0,.2);
+    box-shadow: 0 3px 5px rgba(0,0,0,.2);
+}
+
+.setting-popup > .popup-header .image > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+
+.setting-popup > .popup-header .image:hover {
+    background: white;
+}
+
+.setting-popup > .popup-header .image:hover > img {
+    display: none;
+}
+
+
+.setting-popup > .popup-header .image:hover > i {
+    display: inline-block;
+}
+
+.setting-popup > .popup-header .image > i {
+    display: none;
+    margin-top: calc(50% - 15px);
+    margin-left: calc(50% - 15px);
+    font-size: 30px;
+    color: #537380e6;
+}
+
+.setting-popup > .popup-header input {
+    vertical-align: top;
+    margin-top: 50px;
+    background-color: #537380;
+    border: none;
+    margin-right: 5px;
+    border-bottom: 2px solid #fff;
+    height: 32px;
+    color: white;
+    max-width: 125px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+}
+
+.setting-popup > .popup-content {
+    padding-top: 30px;
+}
+
+.setting-popup > .popup-content .password-block {
+    width: 76%;
+    float: right;
+    margin-top: 20px;
+    border-left: 2px solid #909090b3;
+}
+
+.setting-popup > .popup-content i {
+    float: right;
+    margin-top: 20px;
+    font-size: 25px;
+    margin-right: 20px;
+    color: #909090b3;
+}
+
+.setting-popup > .popup-content input {
+    background-color: #FFF;
+    width: 80%;
+    border: none;
+    border-bottom: 2px solid #537380;
+    height: 32px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}

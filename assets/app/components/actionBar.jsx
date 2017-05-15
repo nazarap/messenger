@@ -10,7 +10,8 @@ class ActionBar extends React.Component {
         super(props);
 
         this.state = {
-            isOpenMenu: false
+            isOpenMenu: false,
+            isOpenSettings: false
         }
     }
 
@@ -27,6 +28,10 @@ class ActionBar extends React.Component {
     logout() {
         localStorage.removeItem('authToken');
         browserHistory.push('/login');
+    }
+
+    settingsPopup(isOpen) {
+        this.setState({ isOpenMenu: false, isOpenSettings: isOpen });
     }
 
     openMenu() {
@@ -52,12 +57,52 @@ class ActionBar extends React.Component {
                     </div>
                     <div className={this.state.isOpenMenu ? 'top-dropdown-menu' : 'top-dropdown-menu-close'}>
                         <ul>
-                            <li onClick={this.logout.bind(this)}>Settings</li>
+                            <li onClick={this.settingsPopup.bind(this, true)}>Settings</li>
                             <hr></hr>
                             <li onClick={this.logout.bind(this)}>Log out</li>
                         </ul>
                     </div>
                 </header>
+                {
+                    this.state.isOpenSettings ?
+                        <div>
+                            <div className="popup-background"></div>
+                            <div className="setting-popup">
+                                <div className="popup-header">
+                                    <div className="main-header">
+                                        <h4>Settings</h4>
+                                        <div className="btn-s">
+                                            <button>Save</button>
+                                            <button onClick={this.settingsPopup.bind(this, false)}>Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div className="image">
+                                        <img src={user.img}/>
+                                        <i className="fa fa-camera-retro" aria-hidden="true"></i>
+                                    </div>
+                                    <input placeholder="First name" value={user.first_name}/>
+                                    <input placeholder="Last name" value={user.last_name}/>
+                                </div>
+                                <div className="popup-content">
+                                    <div>
+                                        <div className="password-block">
+                                            <input placeholder="Login" value={user.login}/>
+                                        </div>
+                                        <i className="fa fa-user" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <div className="password-block">
+                                            <input placeholder="Old password"/>
+                                            <input placeholder="New password"/>
+                                            <input placeholder="Repeat new password"/>
+                                        </div>
+                                        <i className="fa fa-unlock-alt" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> : ''
+                }
+
                 {this.props.children}
             </div>
         )
