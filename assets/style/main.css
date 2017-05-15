@@ -278,6 +278,7 @@ header div.right-menu > i {
 
 .message-block > .message-list > .message-item > .message-info > p {
     color: #787878;
+    white-space: pre;
     font-size: 11px;
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
 }
@@ -285,7 +286,7 @@ header div.right-menu > i {
 .message-block > .message-list > .message-item > .message-info > p {
     color: #151515;
     font-size: 13px;
-    margin-top: 6px;
+    margin-top: 2px;
     margin-bottom: 25px;
     word-break: break-all;
 }
@@ -579,13 +580,13 @@ header > .top-dropdown-menu {
 }
 
 .fa-circle-o-notch:hover > .top-dropdown-menu {
-    opacity: 1;
+    visibility: visible;
     transition:none;
 }
 
 .fa-circle-o-notch > .top-dropdown-menu {
-    opacity: 0;
-    transition:opacity 700ms;
+    visibility: hidden;
+    transition: visibility 300ms;
     display: inline-block;
     padding-top: 15px;
     padding-bottom: 5px;

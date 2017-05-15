@@ -30,6 +30,10 @@ class FriendsList extends React.Component {
         this.props.getMessages(user.id);
     }
 
+    textLimit(text) {
+        return text.length > 22 ? text.substring(0, 20) + '...' : text;
+    }
+
     render() {
         let friends = this.props.friendsStore.friends;
         let messages = this.props.friendsStore.messages;
@@ -47,7 +51,7 @@ class FriendsList extends React.Component {
                             <strong>{this.displayDate(message.date)}</strong>
                         </div>
                         <div className="message-clock">
-                            <p>{message.user_to_id == friend.id ? "You:" : ""} {message.text}</p>
+                            <p>{message.user_to_id == friend.id ? "You:" : ""} {this.textLimit(message.text)}</p>
                         </div>
                     </div>
                 </li>
