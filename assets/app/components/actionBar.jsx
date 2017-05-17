@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 import { connect } from 'react-redux';
-import { getUser, getUserSuccess } from '../actions/users';
+import { getUser, getUserSuccess, updateUserInfo, updateUserInfoSuccess } from '../actions/users';
 import { browserHistory } from 'react-router';
 
 class ActionBar extends React.Component {
@@ -11,7 +11,8 @@ class ActionBar extends React.Component {
 
         this.state = {
             isOpenMenu: false,
-            isOpenSettings: false
+            isOpenSettings: false,
+            user: null
         }
     }
 
@@ -34,12 +35,27 @@ class ActionBar extends React.Component {
         this.setState({ isOpenMenu: false, isOpenSettings: isOpen });
     }
 
+    save() {
+        if( (!this.password.value && !this.old_password.value) || (this.password.value == this.repeat_password.value) ) {
+            this.props.updateUser(this.state.user, this.password.value, this.old_password.value, this.settingsPopup);
+            this.settingsPopup(false);
+        }
+    }
+
     openMenu() {
-        this.setState({isOpenMenu: true});
+        this.setState({ isOpenMenu: true, user: this.props.userStore.user });
     }
 
     closeMenu() {
-        this.setState({isOpenMenu: false});
+        this.setState({ isOpenMenu: false });
+    }
+
+    firstNameListener(event) {
+        this.setState({ user: {...this.state.user, first_name: event.target.value} });
+    }
+
+    lastNameListener(event) {
+        this.setState({ user: {...this.state.user, last_name: event.target.value} });
     }
 
     render() {
@@ -72,7 +88,7 @@ class ActionBar extends React.Component {
                                     <div className="main-header">
                                         <h4>Settings</h4>
                                         <div className="btn-s">
-                                            <button>Save</button>
+                                            <button onClick={this.save.bind(this)}>Save</button>
                                             <button onClick={this.settingsPopup.bind(this, false)}>Cancel</button>
                                         </div>
                                     </div>
@@ -80,21 +96,18 @@ class ActionBar extends React.Component {
                                         <img src={user.img}/>
                                         <i className="fa fa-camera-retro" aria-hidden="true"></i>
                                     </div>
-                                    <input placeholder="First name" value={user.first_name}/>
-                                    <input placeholder="Last name" value={user.last_name}/>
+                                    <input placeholder="First name" value={this.state.user.first_name} onChange={this.firstNameListener.bind(this)}/>
+                                    <input placeholder="Last name" value={this.state.user.last_name} onChange={this.lastNameListener.bind(this)}/>
                                 </div>
                                 <div className="popup-content">
                                     <div>
                                         <div className="password-block">
-                                            <input placeholder="Login" value={user.login}/>
-                                        </div>
-                                        <i className="fa fa-user" aria-hidden="true"></i>
-                                    </div>
-                                    <div>
-                                        <div className="password-block">
-                                            <input placeholder="Old password"/>
-                                            <input placeholder="New password"/>
-                                            <input placeholder="Repeat new password"/>
+                                            <input placeholder="Old password" type="password"
+                                                    ref={(old_password) => { this.old_password = old_password }}/>
+                                            <input placeholder="New password" type="password"
+                                                    ref={(password) => { this.password = password }}/>
+                                            <input placeholder="Repeat new password" type="password"
+                                                    ref={(repeat_password) => { this.repeat_password = repeat_password }}/>
                                         </div>
                                         <i className="fa fa-unlock-alt" aria-hidden="true"></i>
                                     </div>
@@ -122,7 +135,16 @@ export default connect(
                     } else {
                     }
                 });
-        }
+        },
+        updateUser: (user, password, old_password) => {
+            dispatch(updateUserInfo(user, password, old_password))
+                .then((response) => {
+                    if(!response.error) {
+                        dispatch(updateUserInfoSuccess(response.payload.data));
+                    } else {
+                    }
+                });
+        },
     }
 )
 )(ActionBar);

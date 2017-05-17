@@ -37,6 +37,16 @@ class CreateAccount extends React.Component {
         }
     }
 
+    firstNameListener(event) {
+        this.newUser.first_name = event.target;
+        this.setState({ user: {...this.state.user, first_name: event.target.value} });
+    }
+
+    lastNameListener(event) {
+        this.newUser.last_name = event.target;
+        this.setState({ user: {...this.state.user, last_name: event.target.value} });
+    }
+
     render() {
         return (
             <div>
@@ -47,11 +57,12 @@ class CreateAccount extends React.Component {
                 </header>
 
                 <div className="login-block account-create-block">
-                    <img src={this.state.user.photo_200}/>
-                    <input placeholder="First name"
-                            ref={(first_name) => { this.newUser.first_name = first_name }}/>
-                    <input placeholder="Last name"
-                            ref={(last_name) => { this.newUser.last_name = last_name }}/>
+                    <div className="image">
+                        <img src={this.state.user.photo_200}/>
+                        <i className="fa fa-camera-retro" aria-hidden="true"></i>
+                    </div>
+                    <input placeholder="First name" value={this.state.user.first_name} onChange={this.firstNameListener.bind(this)}/>
+                    <input placeholder="Last name" value={this.state.user.last_name} onChange={this.lastNameListener.bind(this)}/>
                     <input placeholder="Login" ref={(login) => { this.newUser.login = login }}/>
                     <input placeholder="Password" type="password"
                             ref={(password) => { this.newUser.password = password }}/>

@@ -52,6 +52,58 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
 
     # Get User data by Token
+    def user_data_update(self, request):
+
+        # Get params from request
+        request_data = json.loads(request.body)
+        first_name = request_data.get('first_name')
+        last_name = request_data.get('last_name')
+
+        old_password = request_data.get('old_password')
+        password = request_data.get('password')
+        token = get_token(request)
+
+        try:
+            user = Token.objects.get(key=token).user
+
+            if user is not None:
+                if old_password == password:
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.save()
+
+                    serializer_context = {
+                        'request': Request(request),
+                    }
+                    serializer = UserSerializer([user], many=True, context=serializer_context)
+
+                    # Return User data
+                    return Response({'user': serializer.data[0]})
+                elif user.check_password(old_password):
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.set_password(password)
+                    user.save()
+
+                    Token.objects.filter(user=user).delete()
+
+                    token, created = Token.objects.get_or_create(user=user)
+                    request.session['auth'] = token.key
+
+                    serializer_context = {
+                        'request': Request(request),
+                    }
+                    serializer = UserSerializer([user], many=True, context=serializer_context)
+
+                    # Return User data
+                    return Response({'user': serializer.data[0], 'token': token.key})
+
+        except ObjectDoesNotExist:
+            return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"user": "Is not active user for this token key"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Get User data by Token
     def find_user_by_name(self, request):
 
         # Get params from request
@@ -250,7 +302,6 @@ class ContactViewSet(viewsets.ModelViewSet):
 
         except ObjectDoesNotExist:
             return Response({"token": "Is not active token key"}, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class FriendViewSet(viewsets.ModelViewSet):

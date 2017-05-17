@@ -60,6 +60,7 @@ class FriendsList extends React.Component {
         return (
             <ul>
                 {list}
+                <p className="count-info-box">Total {friends.length} contacts are displaying in the list</p>
             </ul>
         )
     }

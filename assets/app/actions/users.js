@@ -7,6 +7,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 
 //const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
 
@@ -88,6 +90,35 @@ export function createUser(user) {
 export function createUserSuccess(currentUser) {
   return {
     type: CREATE_USER_SUCCESS,
+    payload: currentUser
+  };
+}
+
+
+export function updateUserInfo(user, password, old_password) {
+  const request = axios({
+    method: 'post',
+    url: 'http://localhost:8000/api/user/update/',
+    data: {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        old_password: old_password,
+        password: password
+    },
+    headers: {
+      'Authorization': `Token ${localStorage.getItem('authToken')}`
+    }
+  });
+
+  return {
+    type: UPDATE_USER,
+    payload: request
+  };
+}
+
+export function updateUserInfoSuccess(currentUser) {
+  return {
+    type: UPDATE_USER_SUCCESS,
     payload: currentUser
   };
 }

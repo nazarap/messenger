@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^user/auth/$', rest_framework_views.obtain_auth_token, name='get_auth_token'),
 
     url(r'^user/data/$', local_views.UserViewSet.as_view({'post': 'user_by_token'})),
+    url(r'^user/update/$', local_views.UserViewSet.as_view({'post': 'user_data_update'})),
 
     # Contacts request
     url(r'^contacts/$', local_views.ContactViewSet.as_view({'get': 'get_contacts_by_user'})),
